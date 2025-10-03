@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>**What a lovely view**</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: black;
+      color: lime;
+      font-family: monospace;
+      font-size: 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      user-select: none;
+    }
+    #clue {
+      display: none;
+      margin-top: 20px;
+    }
+    #final-image {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: 9999;
+    }
+  </style>
+</head>
+<body>
+  <div id="status">Click</div>
+  <div id="clue"></div>
+  <img id="final-image" src="https://picsum.photos/1200/800" alt="strange image">
+
+  <script>
+    let stage = 1;
+    const status = document.getElementById("status");
+    const clue = document.getElementById("clue");
+    const finalImage = document.getElementById("final-image");
+
+    document.addEventListener("click", (event) => {
+      const x = event.clientX;
+      const y = event.clientY;
+      console.log(`Click at (${x}, ${y})`);
+
+      if (stage === 1) {
+        // First secret: anywhere between (150-250, 200-300)
+        if (x >= 150 && x <= 250 && y >= 200 && y <= 300) {
+          document.body.style.background = "darkred";
+          status.innerText = "Yes";
+          stage = 2;
+        }
+      } else if (stage === 2) {
+        // Second secret: anywhere between (400-500, 400-500)
+        if (x >= 400 && x <= 500 && y >= 400 && y <= 500) {
+          clue.style.display = "block";
+          clue.innerText = "Finis Initiumque Est";
+          status.innerText = "Stop";
+          stage = 3;
+        }
+      } else if (stage === 3) {
+        // Final secret: anywhere between (700-800, 100-200)
+        if (x >= 700 && x <= 800 && y >= 100 && y <= 200) {
+          finalImage.style.display = "block";
+          status.style.display = "none";
+          clue.style.display = "none";
+        }
+      }
+    });
+  </script>
+</body>
+</html>
+
